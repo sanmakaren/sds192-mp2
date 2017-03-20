@@ -1,0 +1,19 @@
+---
+title: "Testing out MP2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+load("house_elections.rda")
+load("candidates.rda")
+load("committees.rda")
+load("contributions.rda")
+```
+```{r}
+library(tidyverse)
+glimpse(house_elections)
+```
