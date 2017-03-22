@@ -1,0 +1,72 @@
+---
+title: "Relevant PPL and winloss"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(ggthemes)
+load("house_elections.rda")
+load("candidates.rda")
+load("committees.rda")
+load("contributions.rda")
+```
+```{r}
+tbl_df(house_elections)
+tbl_df(candidates) 
+tbl_df(committees)
+tbl_df(contributions)
+```
+```{r}
+selecter <- function(filter_min, filter_max) {
+house_elections %>%
+  filter(general_votes > 250000) %>%
+  filter(primary_votes > 0) %>%
+  mutate(perc_diff = 100*(general_votes - primary_votes)/primary_votes) %>%
+  select(perc_diff, candidate_name, incumbent) %>%
+  filter(perc_diff > filter_min) %>%
+  filter(perc_diff < filter_max) %>%
+  arrange(perc_diff) %>% 
+  ggplot(aes(x = reorder(candidate_name, -perc_diff), y = perc_diff, fill = incumbent)) +
+  geom_bar(stat = "identity", width = .8, color = "black" ) +
+  ggtitle("Preformance of Campaign by Percent Difference") +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(face = "bold", size = 18)) + 
+  xlab("Candidate Name") +
+  ylab("Percent Different") +
+  scale_fill_manual(values = c("tomato1", "palegreen"),
+                      name="Outcome",
+                      breaks=c("FALSE", "TRUE"),
+                      labels=c("Lost", "Won")) 
+}
+
+```
+
+```{r}
+selecter(570, 1000000)
+selecter(0, 184)
+```
+
+```{r}
+selecter <- function(filter_min, filter_max) {
+house_elections %>%
+  filter(general_votes > 250000) %>%
+  filter(primary_votes > 0) %>%
+  mutate(perc_diff = 100*(general_votes - primary_votes)/primary_votes) %>%
+  select(perc_diff, candidate_name, incumbent) %>%
+  filter(perc_diff > filter_min) %>%
+  filter(perc_diff < filter_max) %>%
+  arrange(perc_diff) 
+}
+
+```
+
+```{r}
+selecter(570, 1000000)
+selecter(0, 184)
+```
