@@ -19,17 +19,18 @@ load("house_elections.rda")
 
 ## Selecter Function
 For our project, we created a function called "selecter" that takes the minimum and maximum number of votes we would like to filter. The selecter function calculates the percent difference between the number of primary votes and general votes that each house candidate recieves, and displays the top 5 candidates within the filter range in a graph. The graph also displays if the candidate won or lost. 
+
 ```{r}
 selecter <- function(filter_min, filter_max, text) {
 house_elections %>%
   filter(general_votes > 250000) %>%
   filter(primary_votes > 0) %>%
   mutate(perc_diff = 100*(general_votes - primary_votes)/primary_votes) %>%
-  select(perc_diff, candidate_name, incumbent) %>%
+  select(perc_diff, candidate_name, ge_winner) %>%
   filter(perc_diff > filter_min) %>%
   filter(perc_diff < filter_max) %>%
   arrange(perc_diff) %>% 
-  ggplot(aes(x = reorder(candidate_name, -perc_diff), y = perc_diff, fill = incumbent)) +
+  ggplot(aes(x = reorder(candidate_name, -perc_diff), y = perc_diff, fill = ge_winner)) +
   geom_bar(stat = "identity", width = .8, color = "black" ) +
   ggtitle(text) +
   theme(panel.grid.major = element_blank(),
@@ -37,9 +38,8 @@ house_elections %>%
         plot.title = element_text(face = "bold", size = 18)) + 
   xlab("Candidate Name") +
   ylab("Percent Difference") +
-  scale_fill_manual(values = c("tomato1", "palegreen"), name="Outcome", breaks=c("FALSE", "TRUE"), labels=c("Lost", "Won")) 
+  scale_fill_manual(values = c("tomato1", "palegreen"), name="Outcome", breaks=c("N", "W"), labels=c("Lost", "Won")) 
 }
-
 ```
 
 ## Greatest Percent Difference in Campaign Performance
