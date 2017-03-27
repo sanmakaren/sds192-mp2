@@ -58,4 +58,4 @@ selecter(0, 184, "Least Percent Difference in Campaign Performance")
 In both graphs, the majority of the candidates (80% or 4 out of 5) won the election. Previously, we predicted that candidates with the least percent difference would lose the election (we expected at least 60% of the candidates in the least percent difference would lose their election). However, this proved to be wrong.  
 
 ## Summary
-A graph of the percentage difference between primary to general elections show that there is no clear correlation between the percentage difference and the chances of the candidate winning an election.
+A graph of the percentage difference between primary to general elections show that there is appears to be a correlation between the percentage difference and the chances of the candidate winning an election although, further statistical analysis is needed to confirm this.
