@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 We used the "house_elections.rda" dataset. The dataset is a table that contains data on the election results for the House of Representatives in the 2012 Federal Elections. More information on this dataset can be found here: http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml.
 ```{r}
 library(tidyverse)
-library(ggthemes)
 load("house_elections.rda")
 ```
 
