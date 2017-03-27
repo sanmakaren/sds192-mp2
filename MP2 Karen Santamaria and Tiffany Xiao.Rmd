@@ -1,0 +1,66 @@
+---
+title: "House Elections Percentage Change from Primary Votes to General Votes"
+author: "Karen Santamaria and Tiffany Xiao"
+date: "20 March 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+##Repository Link
+Link to our repository which shows the issues tab and version control
+https://github.com/sanmakaren/sds192-mp2
+
+## The Dataset
+We used the "house_elections.rda" dataset. The dataset is a table that contains data on the election results for the House of Representatives in the 2012 Federal Elections. More information on this dataset can be found here: http://www.fec.gov/pubrec/fe2012/federalelections2012.shtml.
+```{r}
+library(tidyverse)
+load("house_elections.rda")
+```
+
+## Selecter Function
+For our project, we created a function called "selecter" that takes the minimum and maximum number of votes we would like to filter. The selecter function calculates the percent difference between the number of primary votes and general votes that each house candidate recieves, and displays the top 5 candidates within the filter range in a graph. The graph also displays if the candidate won or lost. 
+
+```{r}
+selecter <- function(filter_min, filter_max, text) {
+house_elections %>%
+  filter(general_votes > 250000) %>%
+  filter(primary_votes > 0) %>%
+  mutate(perc_diff = 100*(general_votes - primary_votes)/primary_votes) %>%
+  select(perc_diff, candidate_name, ge_winner) %>%
+  filter(perc_diff > filter_min) %>%
+  filter(perc_diff < filter_max) %>%
+  arrange(perc_diff) %>% 
+  ggplot(aes(x = reorder(candidate_name, -perc_diff), y = perc_diff, fill = ge_winner)) +
+  geom_bar(stat = "identity", width = .8, color = "black" ) +
+  ggtitle(text) +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(face = "bold", size = 18)) + 
+  xlab("Candidate Name") +
+  ylab("Percent Difference") +
+  scale_fill_manual(values = c("tomato1", "palegreen"), name="Outcome", breaks=c("N", "W"), labels=c("Lost", "Won")) 
+}
+```
+
+## Greatest Percent Difference in Campaign Performance
+Our first graph is the graph of the top five candidates with the greatest increase of votes from the primary election to the general election. 
+```{r}
+selecter(570, 1000000, "Greatest Percent Difference in Campaign Performance")
+```
+
+## Greatest Percent Difference in Campaign Performance
+Our second graph is the graph of the bottom five candidates with the least increase of votes from the primary election to the general election. 
+```{r}
+selecter(0, 184, "Least Percent Difference in Campaign Performance")
+```
+
+## Inferences
+We predicted that candidates with the least percent difference would lose the election, however, we found that the majority in the "Least Percent Difference in Campaign Performance" did win the election, although, the lowest ranking candidate did loose. This may be due to the filtering we did in order to increase relevence of the candidates that were displayed on the graphs.  From the graphs we created we began to infer that the time between the primary and general election is not as essential as the time before the primary because even candidates that did not have many general votes compared to their primary votes were still able to win, however, further analysis is needed to confirm this.
+
+We also looked to identify possible causes for rapid increases or decreases, such as the case with John Koster who experienced a very low increase in votes from general to primary elections because of a scandal dealing with his inappropriate response to a question about rape. Thomas Massie on the other hand was well-liked throughout his campaign and received endorsements from established Republicans and conservative organizations such as Ron Paul, Gun Owners of America, and Young American for Liberty which we belive contributed to his success as a candidate.
+
+
+## Summary
+A graph of the percentage difference between primary to general elections show that there is appears to be a correlation between the percentage difference and the chances of the candidate winning an election although, further statistical analysis is needed to confirm this.
