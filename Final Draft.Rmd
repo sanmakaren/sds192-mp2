@@ -55,7 +55,7 @@ selecter(0, 184, "Least Percent Difference in Campaign Performance")
 ```
 
 ## Inferences
-We predicted that candidates with the least percent difference would lose the election, however, we found that the majority in the "Least Percent Difference in Campaign Performance" did win the election, although, the lowest ranking candidate did loose. This may be due to the filtering we did in order to increase relevence of the candidates that were displayed on the graphs.  
+We predicted that candidates with the least percent difference would lose the election, however, we found that the majority in the "Least Percent Difference in Campaign Performance" did win the election, although, the lowest ranking candidate did loose. This may be due to the filtering we did in order to increase relevence of the candidates that were displayed on the graphs.  From the graphs we created we began to infer that the time between the primary and general election is not as essential as the time before the primary because even candidates that did not have many general votes compared to their primary votes were still able to win, however, further analysis is needed to confirm this.
 
 ## Summary
 A graph of the percentage difference between primary to general elections show that there is appears to be a correlation between the percentage difference and the chances of the candidate winning an election although, further statistical analysis is needed to confirm this.
